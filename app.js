@@ -6,9 +6,9 @@ const config = require('./utils/config')
 const app = express()
 const userRouter = require('./controllers/userRouter')
 const clickRouter = require('./controllers/clickRouter')
+const loginRouter = require('./controllers/loginRouter')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
-
 
 
 mongoose.set('useFindAndModify', false)
@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 app.use(middleware.requestLogger)
 app.use('/api/click', clickRouter)
 app.use('/api/user', userRouter)
-
+app.use('/api/login', loginRouter)
 
 
 app.get('/', (req, res) => {
