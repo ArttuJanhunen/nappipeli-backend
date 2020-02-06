@@ -33,4 +33,45 @@ userRouter.post('/', async (req, res, next) => {
   }
 })
 
+userRouter.put('/:id', async (req, res, next) => {
+
+  let user = await User.findById(req.params.id)
+
+  user.points = user.points - 1
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true })
+    res.json(updatedUser.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+
+})
+
+userRouter.put('/:id/add', async (req, res, next) => {
+
+  let user = await User.findById(req.params.id)
+  const points = req.body.points
+
+  user.points = points
+
+  console.log(user)
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true })
+    res.json(updatedUser.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+
+})
+
+userRouter.get('/:id', async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+    res.json(user.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 module.exports = userRouter

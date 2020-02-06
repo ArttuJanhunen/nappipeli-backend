@@ -13,7 +13,7 @@ clickRouter.get('/', async (req, res, next) => {
 clickRouter.post('/', async (req, res, next) => {
 
   const click = new Click({
-    amount: 0,
+    amount: 1,
   })
 
   try {
@@ -26,15 +26,18 @@ clickRouter.post('/', async (req, res, next) => {
 
 clickRouter.put('/:id', async (req, res, next) => {
 
-  const oldClicks = req.body.amount
-  console.log('wtf '+oldClicks)
+  const click = await Click.findById(req.params.id)
 
-  const click = {
-    amount: oldClicks + 1
+  if (click.amount === 500) {
+    click.amount = 0
+  }
+
+  const newClick = {
+    amount: click.amount + 1
   }
 
   try {
-    const updatedClick = await Click.findByIdAndUpdate(req.params.id, click, { new: true })
+    const updatedClick = await Click.findByIdAndUpdate(req.params.id, newClick, { new: true })
     res.json(updatedClick.toJSON())
   } catch (exception) {
     next(exception)
