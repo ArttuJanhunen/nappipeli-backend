@@ -33,6 +33,7 @@ app.use('/api/click', clickRouter)
 app.use('/api/user', userRouter)
 app.use('/api/login', loginRouter)
 
+app.use(express.static('build'))
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world!</h1>')
