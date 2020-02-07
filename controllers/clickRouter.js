@@ -28,7 +28,7 @@ clickRouter.put('/:id', async (req, res, next) => {
 
   const click = await Click.findById(req.params.id)
 
-  if (click.amount === 500) {
+  if (click.amount >= 500) {
     click.amount = 0
   }
 
